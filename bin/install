@@ -1,0 +1,6 @@
+#!/bin/bash -e
+
+source $OPENSHIFT_CARTRIDGE_SDK_BASH
+
+set_env_var 'SAMPLE_VAR' "redhat123" ${OPENSHIFT_JBOSSEAP_DIR}/env
+

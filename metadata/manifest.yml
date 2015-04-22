@@ -1,0 +1,33 @@
+---
+Name: sample
+Cartridge-Short-Name: SAMPLE
+Architecture: x86_64
+Display-Name: sample 1.0
+Description: Sample Cartridge
+Version: '1.0'
+Versions:
+- '1.0'
+Cartridge-Version: 0.0.1
+Cartridge-Vendor: mbenmans
+License: GPL
+Vendor: mbenmans
+Categories:
+- service
+- plugin
+Website: http://www.openshift.com
+Provides:
+- sample
+Scaling:
+  Min: 1
+  Max: -1
+Group-Overrides:
+- components:
+  - sample-1.0
+  - web_framework
+  - jbosseap-6
+  - jbosseap
+  - jboss-eap6
+  - jbosseap-standalone
+  - jboss-eap6-standalone
+
+Source-Url: https://github.com/hbenmansour/openshift-cartridge-sample.git
