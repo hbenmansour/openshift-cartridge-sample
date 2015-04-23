@@ -2,5 +2,39 @@
 
 source $OPENSHIFT_CARTRIDGE_SDK_BASH
 
-set_env_var 'SAMPLE_VAR' "redhat123" ${OPENSHIFT_SAMPLE_DIR}/env
 
+declare -a ENV_VAR_CREATE_RESULT=$(python - ${ENV_DIR} <<EOF
+import sys, urllib, urllib2, json, subprocess, re, string;
+
+json_string = """
+{ "data" : [ { "key" : "ENV_VAR1", "value" : "foo" },{ "key" : "ENV_VAR2", "value" : "bar"},{ "key" : "ENV_VAR3", "value" : "foo_bar"}]}
+"""
+
+try:
+    json_data =  json.loads(json_string)
+    res = ""
+    for env in json_data["data"]:
+        res = res + env["key"] + "|" + env["value"] + ";"
+
+    print res[:-1]
+except Exception as e:
+    print e
+    print "Unexpected error:", sys.exc_info()[0], sys.exc_info()[1]
+    print("1")
+
+EOF
+)
+
+
+vars=${ENV_VAR_CREATE_RESULT}
+
+for env in $(echo $vars | tr ";" "\n")
+do
+        set_env_var $(echo $env | awk -F "|" '{print $1 " " $2}') ${OPENSHIFT_SAMPLE_DIR}/env
+done
+
+
+
+
+
+exit 0
